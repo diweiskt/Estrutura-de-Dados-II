@@ -33,11 +33,51 @@ Posições são numeradas de 1, 2,...  a N.
  */
 
  #include <iostream>
+ #include <vector>
+ #include <algorithm>
 
  using namespace std;
 
  int main(){
+   int contaCasos = 1;
+   int N, Q;
 
+   while(cin >> N >> Q){
+      if(N==0 && Q==0){
+         break;
+      }
+
+      int vet[N];
+      for(int i=0;i<N;i++){
+         cin >> vet[i];
+      }
+      sort(vet,vet+N);
+      cout << "CASE# " <<  contaCasos << ":"<< endl;
+      contaCasos++;
+
+      for(int i=0;i<Q;i++){
+         int consulta;
+         cin >> consulta;
+
+         bool encontrado = false;
+         int indice = -1;
+
+         for(int ii=0;ii<N;ii++){
+            if(vet[ii] == consulta){
+               encontrado = true;
+               indice = ii + 1;
+               break;
+            }
+         }
+
+         if(encontrado){
+            cout << consulta << " found at " << indice << endl;
+         }
+         else{
+            cout << consulta << " not found" << endl;
+         }
+      }
+   }
 
 
     return 0;

@@ -20,3 +20,34 @@ uma letra maiúscula ou minúscula do alfabeto e na terceira posição outro car
 Saída
 Para cada caso de teste, deve ser impressa uma linha com um valor inteiro que representa a solução da sequência proposta por Paula.
 */
+
+#include <iostream>
+#include <cctype>
+
+using namespace std;
+
+int main(){
+    int N;
+    cin >> N;
+
+    for(int i=0;i<N;i++){
+        int N1, N2, resultado;
+        char S;
+        cin >> N1 >> S >> N2;
+
+        if(N1 == N2){
+            resultado = N1 * N2;
+        }
+        else if(islower(S)){
+            resultado = N1 + N2;
+        }
+        else if(isupper(S)){
+            resultado = N2 - N1;
+        }
+        
+        cout << resultado << endl;
+    }
+
+
+    return 0;
+}

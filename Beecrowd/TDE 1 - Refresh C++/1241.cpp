@@ -12,3 +12,36 @@ maiores que zero, cada um deles podendo ter até 1000 dígitos.
 Saída
 Para cada caso de entrada imprima uma mensagem indicando se o segundo valor encaixa no primeiro valor, confome exemplo abaixo.
 */
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main(){
+    int N;
+    cin >> N;
+
+    for(int i=0;i<N;i++){
+        string A, B;
+        cin >> A >> B;
+
+        if(B.length() > A.length()){
+            cout << "nao encaixa" << endl;
+        }
+        else{
+            int inicioCorte = A.length() - B.length();
+            string finalA = A.substr(inicioCorte);
+
+            if(finalA == B){
+                cout << "encaixa" << endl;
+            }
+            else{
+                cout << "nao encaixa" << endl;
+            }
+        }
+    }
+
+
+    return 0;
+}

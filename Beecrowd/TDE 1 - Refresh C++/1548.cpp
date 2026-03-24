@@ -28,3 +28,40 @@ Saída
 Para cada caso de teste imprima uma linha, contendo um inteiro, indicando o número de alunos que não 
 precisaram trocar de lugar mesmo após a fila ser reordenada.
 */
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    int N;
+    cin >> N;
+
+    for(int i=0;i<N;i++){
+        int M;
+        cin >> M;
+
+        vector <int> filaOriginal(M);
+        vector<int> filaOrdenada(M);
+
+        for(int j=0;j<M;j++){
+            cin >> filaOriginal[j];
+            filaOrdenada[j] = filaOriginal[j];
+        }
+
+        sort(filaOrdenada.rbegin(), filaOrdenada.rend());
+
+        int naoMudaram = 0;
+
+        for(int j=0;j<M;j++){
+            if(filaOriginal[j] == filaOrdenada[j]){
+                naoMudaram++;
+            }
+        }
+
+        cout << naoMudaram << endl;
+    }
+    return 0;
+}

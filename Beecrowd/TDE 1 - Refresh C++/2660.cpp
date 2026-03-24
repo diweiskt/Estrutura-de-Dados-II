@@ -22,3 +22,45 @@ mesmo identificador não aparece duas vezes nessa lista.
 Saída
 Seu programa deve imprimir uma linha contedo N − M inteiros com os identificadores das pessoas que permaneceram na fila, em ordem de chegada.
 */
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    int N;
+    cin >> N;
+
+    vector<int> fila(N);
+    for(int i=0;i<N;i++){
+        cin >> fila[i];
+    }
+
+    int M;
+    cin >> M;
+
+    vector<bool> saiu(100005, false);
+    for(int i=0;i<M;i++){
+        int id;
+        cin >> id;
+        saiu[id] = true;
+    }
+
+    bool primeiro = true;
+
+    for(int i=0;i<N;i++){
+        int pessoa = fila[i];
+
+        if(!saiu[pessoa]){
+            if(!primeiro){
+                cout << " ";
+            }
+            cout << pessoa;
+            primeiro = false;
+        }
+    }
+    cout << endl;
+
+    return 0;
+}

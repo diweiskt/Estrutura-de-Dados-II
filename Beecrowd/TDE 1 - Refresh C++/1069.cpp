@@ -15,3 +15,34 @@ seguir é um caso de teste que contém até 1000 caracteres, incluindo "<,>, ."
 Saída
 Você deve imprimir a quantidade de diamantes possíveis de serem extraídos em cada caso de entrada.
 */
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+    int N;
+    string testes;
+
+    cin >> N;
+    for(int i=0;i<N;i++){
+        int diamantes = 0;
+        int esqEsperando = 0;
+
+        cin >> testes;
+        for(char ch : testes){
+            if(ch == '<'){
+                esqEsperando++;
+            }
+            else if(ch == '>' && esqEsperando > 0){
+                diamantes++;
+                esqEsperando--;
+            }
+        }
+        cout << diamantes << endl;
+    }
+
+
+    return 0;
+}
