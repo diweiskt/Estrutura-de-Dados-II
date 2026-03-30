@@ -2,88 +2,75 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <string>
 
 using namespace std;
 
 struct wordcount {
-    string word;
-    int count;
+  string word;
+  int count;
 };
 
-const int HASHSIZE = 101; // Um número primo maior ajuda a evitar colisões
+const int HASHSIZE = 1000;
 
-unsigned hashfn(const string& str) {
-    unsigned hash = 0;
-    for (char c : str) {
-        hash = hash * 31 + unsigned(c); // Multiplicador ajuda na distribuição
-    }
-    return hash % HASHSIZE;
+// unsigned hashfn(const string &str) {
+//   unsigned sum = 0;
+//   for (auto c : str)
+//     sum += unsigned(c);
+
+//   return sum % HASHSIZE;
+// }
+
+unsigned hashfn(const string &str) { // DJB2
+  unsigned hash = 5381;
+  for (auto c : str)
+    hash = hash * 33 + unsigned(c);
+
+  return hash % HASHSIZE;
 }
 
 int main() {
-    ifstream arq("clarissa.txt");
-    if (!arq.is_open()) {
-        cerr << "Erro ao abrir o arquivo clarissa.txt" << endl;
-        return 1;
-    }
+  ifstream arq("clarissa.txt");
+  // TODO: testar se abriu com sucesso
+  char ch;
+  string word;
+  int nchar = 0, nwords = 0;
+  vector<wordcount> distinctwords[HASHSIZE];
 
-    char ch;
-    string word = "";
-    int nchar = 0, nwords = 0;
-    vector<wordcount> hash_table[HASHSIZE];
-
-    while (arq.get(ch)) {
-        nchar++;
-        if (isalpha(static_cast<unsigned char>(ch))) {
-            word += tolower(static_cast<unsigned char>(ch));
-        } else if (!word.empty()) {
-            nwords++;
-            unsigned index = hashfn(word) % HASHSIZE;
-            bool found = false;
-
-            // Busca apenas no balde (bucket) específico
-            for (auto& wc : hash_table[index]) {
-                if (wc.word == word) {
-                    wc.count++;
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                hash_table[index].push_back({word, 1});
-            }
-            word = ""; 
+  while (arq.get(ch)) { // Lê um caracter por vez
+    nchar++;
+    if (isalpha(ch)) {       // É letra?
+      word += tolower(ch);   // Concatena em minúsculo
+    } else if (word != "") { // Não é letra e existe uma palavra
+      bool found = false;
+      auto h = hashfn(word);
+      for (auto &wc : distinctwords[h]) { // para cada palavra contida no vector
+        if (wc.word == word) {            // se já existe
+          wc.count++;                     // incrementa contagem
+          found = true;
+          break;
         }
+      }
+      if (!found) {                            // Não achou
+        distinctwords[h].push_back({word, 1}); // Insere com count=1
+      }
+      word = ""; // Limpa
+      nwords++;
     }
-    arq.close(); // Fecha após ler tudo
+  }
+  arq.close();
 
-    // Gravação dos resultados
-    ofstream csv("dados.csv");
-    int total_distinct = 0;
-    for (int i = 0; i < HASHSIZE; i++) {
-        for (const auto& wc : hash_table[i]) {
-            csv << "\"" << wc.word << "\";" << wc.count << "\n";
-            total_distinct++;
-        }
+  ofstream csv("dados.csv");
+  int total = 0;
+  for (int h = 0; h < HASHSIZE; h++) {
+    for (auto &wc : distinctwords[h]) {
+      csv << "\"" << wc.word << "\";" << wc.count << "\n";
     }
-    csv.close();
+    total += distinctwords[h].size();
+    cout << h << '\t' << distinctwords[h].size() << '\n';
+  }
+  csv.close();
 
-    cout << "\nDISTRIBUIÇÃO DA TABELA HASH\n\n";
-
-    int total_distintas = 0;
-    for (int i = 0; i < HASHSIZE; i++) {
-        int tamanho_balde = hash_table[i].size();
-        total_distintas += tamanho_balde;
-
-        // Exibe o número do vetor e quantos itens ele contém
-        cout << i << "\t| " << tamanho_balde << "\n";
-    }
-
-    cout << nchar << "\n caracteres lidos\n"
-         << nwords << " palavras totais\n"
-         << total_distinct << " palavras distintas\n";
-
-    return 0;
+  cout << nchar << " caracteres\n"
+       << nwords << " palavras\n"
+       << total << " distintas\n";
 }
