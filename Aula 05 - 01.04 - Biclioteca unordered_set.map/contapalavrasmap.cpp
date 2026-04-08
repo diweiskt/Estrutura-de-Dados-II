@@ -8,7 +8,7 @@ using namespace std;
 int main() {
   ifstream arq("clarissa.txt");
   if(!arq){
-    cout << "Não abriu arquivos de entrada\n";
+    cout << "Não abriu arquivo de entrada\n";
     return 1;
   }
   char ch;
@@ -22,7 +22,7 @@ int main() {
       word += tolower(ch);   // Concatena em minúsculo
     } else if (word != "") { // Não é letra e existe uma palavra
       distinctwords[word]++;
-
+      
       word = ""; // Limpa
       nwords++;
     }
@@ -30,7 +30,7 @@ int main() {
   arq.close();
 
   ofstream csv("dados.csv");
-  for(auto [key, value] : distinctwords){
+  for(auto [key, value]: distinctwords ){
     csv << '"' << key << '"' << ';' << value << '\n';
   }
   csv.close();
