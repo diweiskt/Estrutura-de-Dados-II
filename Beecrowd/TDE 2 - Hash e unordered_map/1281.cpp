@@ -21,3 +21,38 @@ Saída
 Para cada caso de teste, imprima o valor que será gasto por dona Parcinova no seguinte 
 /formato: R$ seguido de um espaço e seguido do valor, com 2 casas decimais, conforme o exemplo abaixo.
 */
+
+#include <iostream>
+#include <unordered_map>
+#include <iomanip>
+
+using namespace std;
+
+int main(){
+    int N;
+    cin >> N;
+
+    for(int i=0;i<N;i++){
+        unordered_map<string, double> produtos;
+        int M;
+        cin >> M;
+        for(int j=0;j<M;j++){
+            string produto;
+            double preco;
+            cin >> produto >> preco;
+            produtos[produto] = preco;
+        }
+        int P;
+        cin >> P;
+        double total = 0;
+        for(int j=0;j<P;j++){
+            string produto;
+            int qtd;
+            cin >> produto >> qtd;
+            total += produtos[produto] * qtd;
+        }
+        cout << "R$ " << fixed << setprecision(2) << total << endl;
+    }
+
+    return 0;
+}
