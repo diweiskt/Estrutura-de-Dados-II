@@ -1,44 +1,62 @@
 // Binary tree
-#include <string>
 #include <algorithm>
 #include <iostream>
+#include <string>
 
-namespace binarytree{
+namespace binarytree {
 
-    struct node{
-        std::string value;
-        node *left;
-        node *right;
-    };
+struct node {
+    std::string value;
+    node* left;
+    node* right;
+};
 
-    //Função cria new node
-    node *createnode(const std::string &val){
-        node *nd = new node;
-        nd->value = val;
-        nd->left = nd->right = nullptr;
-        return nd;
+node* createnode(const std::string& val)
+{
+    node* nd = new node;
+    nd->value = val;
+    nd->left = nd->right = nullptr;
+    return nd;
+}
+
+// Calcula a altura da árvore
+int height(node* root)
+{
+    if (!root)
+        return -1;
+
+    return std::max(height(root->left), height(root->right)) + 1;
+}
+
+// Representação por barras
+void show(node* root, int level=0)
+{
+    if (!root){
+        std::cout << std::string(level, '\t') << "∅" << "\n";
+        return;
     }
 
-    //Calcula a altura da árvore
-    int height(node *root){
-        if(!root) // if(root==nullptr)
-            return -1;
+    std::cout << std::string(level, '\t') << root->value << "\n";
+    if(!root->left && !root->right) return;
 
-        return std::max(height(root->left), height(root->right)) +1;
+    show(root->left, level+1);
+    show(root->right, level+1);
+}
+
+// Representação por parênteses aninhado
+void show2(node* root)
+{
+    if (!root){
+        std::cout << "∅";
+        return;
     }
 
-    void show(node *root){
-        if(!root)
-            return;
+    std::cout << "(" << root->value;
 
-        std::cout << root->value << "\n";
-        if(root->left)
-            std::cout << "Esquerda: ";
-            show(root->left);
-
-        if(root->right)
-            std::cout << "Direita: ";
-            show(root->right);
-
+    if(root->left || root->right){
+      show2(root->left);
+      show2(root->right);
     }
+    std::cout << ")";
+}
 } // namespace binarytree
