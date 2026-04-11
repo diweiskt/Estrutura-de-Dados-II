@@ -47,3 +47,50 @@ O seu aplicativo deverá mostrar na tela a frase no idioma correto.
 Caso ela não esteja cadastrada, você deverá exibir a mensagem "--- NOT FOUND ---" 
 para que depois dos testes você possa completar o banco de dados.
 */
+
+#include <iostream>
+#include <unordered_map>
+
+using namespace std;
+
+int main(){
+
+    unordered_map<string, string> tradutor;
+    
+    tradutor["brasil"] = "Feliz Natal!";
+    tradutor["alemanha"] = "Frohliche Weihnachten!";
+    tradutor["austria"] = "Frohe Weihnacht!";
+    tradutor["coreia"] = "Chuk Sung Tan!";
+    tradutor["espanha"] = "Feliz Navidad!";
+    tradutor["grecia"] = "Kala Christougena!";
+    tradutor["estados-unidos"] = "Merry Christmas!";
+    tradutor["inglaterra"] = "Merry Christmas!";
+    tradutor["australia"] = "Merry Christmas!";
+    tradutor["portugal"] = "Feliz Natal!";
+    tradutor["suecia"] = "God Jul!";
+    tradutor["turquia"] = "Mutlu Noeller";
+    tradutor["argentina"] = "Feliz Navidad!";
+    tradutor["chile"] = "Feliz Navidad!";
+    tradutor["mexico"] = "Feliz Navidad!";
+    tradutor["antardida"] = "Merry Christmas!";
+    tradutor["canada"] = "Merry Christmas!";
+    tradutor["irlanda"] = "Nollaig Shona Dhuit!";
+    tradutor["belgica"] = "Zalig Kerstfeest!";
+    tradutor["italia"] = "Buon Natale!";
+    tradutor["libia"] = "Buon Natale!";
+    tradutor["siria"] = "Milad Mubarak!";
+    tradutor["marrocos"] = "Milad Mubarak!";
+    tradutor["japao"] = "Merii Kurisumasu!";
+
+    string entrada;
+
+    while (getline(cin, entrada)) {
+        if(tradutor.count(entrada) == 0){
+            cout << "--- NOT FOUND ---\n";
+        } else {
+            cout << tradutor[entrada] << "\n";
+        }
+    }
+
+    return 0;
+}
