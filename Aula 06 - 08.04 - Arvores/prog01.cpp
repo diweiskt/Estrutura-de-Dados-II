@@ -15,3 +15,9 @@ int main()
     std::cout << "Altura: " << height(root) << "\n";
     show(root);
 }
+
+/*
+NLR - Pre-order: A B D E F C
+LNR - In-order: D B F E A C
+LRN - Post-order: D F E B C A
+*/
