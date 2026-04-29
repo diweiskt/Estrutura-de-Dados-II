@@ -125,6 +125,50 @@ void show_level(node *root, int level){
     show_level(root->right, level - 1);
 }
 
+void pesquisa(node *root, const std::string &val) {
+    if (!root) {
+        std::cout << val << " nao existe\n";
+        return;
+    }
+    if (root->value == val) {
+        std::cout << val << " existe\n";
+        return; 
+    }
+    if (val < root->value) pesquisa(root->left, val);
+    else pesquisa(root->right, val);
+}
+
+void show_Por_level(node *root) {
+    if (!root) return;
+
+    std::queue<node*> fila;
+    fila.push(root);
+    int level = 0;
+
+    while (!fila.empty()) {
+        int nosNoNivel = fila.size();
+        
+        // Em uma BST, se inserirmos o 'left' antes do 'right', 
+        // o primeiro nó retirado da fila em cada nível será o menor.
+        node* menorDoNivel = fila.front(); 
+
+        // Imprime o nível e o menor valor separados por espaço
+        std::cout << level << " " << menorDoNivel->value << std::endl;
+
+        // Processamos todos os nós do nível atual para colocar os filhos na fila
+        for (int i = 0; i < nosNoNivel; ++i) {
+            node* atual = fila.front();
+            fila.pop();
+
+            // Adiciona os filhos para o próximo nível
+            if (atual->left) fila.push(atual->left);
+            if (atual->right) fila.push(atual->right);
+        }
+
+        level++;
+    }
+}
+
 } // namespace binarytree
 
 /*

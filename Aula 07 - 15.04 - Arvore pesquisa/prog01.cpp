@@ -27,6 +27,8 @@ int main()
 
     std::cout << "\n";
 
+    show_level(root,2);
+
     destroy(root);
 }
 
