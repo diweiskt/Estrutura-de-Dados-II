@@ -21,4 +21,8 @@ int main(){
     
     g.DFS_from("A");
     g.show();
+    // TODO: criar estas três funções. Retornar 0 se não existir
+/*    std::cout << "Grau de entrada: " << g.indegree("A") << "\n"
+              << "Grau de saída: " << g.outdegree("A") << "\n"
+              << "Grau: " << g.degree("A") << "\n";  */
 }
